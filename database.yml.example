@@ -1,0 +1,6 @@
+adapter: postgres
+database: pact_broker_server_db
+host: localhost
+user: pact_broker_server
+password:
+encoding: utf-8
