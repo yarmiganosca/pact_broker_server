@@ -3,13 +3,18 @@ require 'logger'
 require 'sequel'
 require 'pact_broker'
 require 'yaml'
+require 'clogger'
 
-DATABASE_CONFIG = YAML.load_file('./database.yml')
+database_config = YAML.load_file('./database.yml')
 
 app = PactBroker::App.new do |config|
-  db_config = DATABASE_CONFIG.merge(logger: config.logger)
-
-  config.database_connection = Sequel.connect(db_config)
+  database_config.merge!(logger: config.logger)
+  
+  config.database_connection = Sequel.connect(database_config)
 end
 
+use(Clogger,
+  format:    :Combined,
+  logger:    database_config[:logger],
+  reentrant: true)
 run app
