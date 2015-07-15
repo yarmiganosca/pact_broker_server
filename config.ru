@@ -5,7 +5,7 @@ require 'pact_broker'
 require 'yaml'
 require 'clogger'
 
-database_config = YAML.load_file('./database.yml')
+database_config = YAML.load_file('./config/database.yml')
 
 app = PactBroker::App.new do |config|
   database_config.merge!(logger: config.logger)
